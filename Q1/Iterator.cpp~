@@ -1,0 +1,101 @@
+#include "Iterator.h"
+#include <iostream>
+#include <stdlib.h>
+
+Iterator::Iterator(node* u,AVLtree* tt)
+{
+    v=u;
+    t=tt;
+    if(u!=NULL)
+    {
+        elem=new key_val(v->getkey(),v->getvalue());
+    }
+    else
+    {
+        elem=NULL;
+    }
+    //elem.setk(v->getk());
+    //elem.setval(v->getval());
+    //ctor
+}
+
+key_val Iterator::operator *()
+{
+    return *elem;
+}
+
+bool Iterator::operator ==(const Iterator &p)const
+{
+    return (v==p.v);
+}
+
+bool Iterator::operator !=(const Iterator &p)const
+{
+    return (v!=p.v);
+}
+
+Iterator Iterator::operator ++()
+{
+    cout<<"++\n";
+    //int k;
+    //k=finalheight(v);
+    if(v==NULL)
+    {
+        cout<<"here:0\n";
+        return t->end();
+    }
+    else
+    {
+        cout<<"a\n";
+        v=t->successor(v);
+        cout<<"b\n";
+        if(v!=NULL)
+        {
+            cout<<"c\n";
+            elem->setk(v->getkey());
+            elem->setval(v->getvalue());
+            return *this;
+        }
+        else
+        {
+            cout<<"d\n";
+            return t->end();
+        }
+    }
+}
+
+Iterator Iterator::operator --()
+{
+    cout<<"--\n";
+    //v=t->predecessor(v);
+    if(v==NULL)
+    {
+        cout<<"here:1\n";
+        return t->end();
+    }
+    else
+    {
+        cout<<"a1\n";
+        v=t->predecessor(v);
+        cout<<"b1\n";
+        if(v!=NULL)
+        {
+            cout<<"c1\n";
+            elem->setk(v->getkey());
+            elem->setval(v->getvalue());
+            return *this;
+        }
+        else
+        {
+            cout<<"d1\n";
+            return t->end();
+        }
+    }
+}
+
+
+Iterator::~Iterator()
+{
+    //dtor
+}
+
